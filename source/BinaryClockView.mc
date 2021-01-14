@@ -2,6 +2,7 @@ using Toybox.WatchUi;
 using Toybox.Graphics;
 using Toybox.System;
 using Toybox.Lang;
+using Toybox.Time;
 
 class BinaryClockView extends WatchUi.WatchFace 
 {
@@ -71,7 +72,12 @@ class BinaryClockView extends WatchUi.WatchFace
 			} else {
 				colorCubes(targetDc, cubesDict.get("Sec"), timeArray[i]);
 			}
-		}
+		}	
+		
+		// Epoch display
+		targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);	
+        targetDc.drawText(120, 135, Graphics.FONT_GLANCE_NUMBER, Time.now().value(), Graphics.TEXT_JUSTIFY_CENTER);
+        
     }
 
     // Called when this View is removed from the screen. Save the
@@ -104,18 +110,18 @@ class BinaryClockView extends WatchUi.WatchFace
 			
 			for (var i = 0; i < tensCubesArray.size(); i++) {
 				if (tensDigit % 2) {
-					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 				} else {
-					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
 				}
 				targetDc.fillRoundedRectangle(tensCubesArray[i][0], tensCubesArray[i][1], 15, 15, 2);
 				tensDigit = tensDigit/2; 
 			}
 			for (var i = 0; i < onesCubesArray.size(); i++) {
 				if (onesDigit % 2) {
-					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 				} else {
-					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
 				}
 				targetDc.fillRoundedRectangle(onesCubesArray[i][0], onesCubesArray[i][1], 15, 15, 2);
 				onesDigit = onesDigit/2;
@@ -123,14 +129,14 @@ class BinaryClockView extends WatchUi.WatchFace
 		} else {
 			onesDigit = time;
 			for (var i = 0; i < tensCubesArray.size(); i++) {
-				targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_RED);
+				targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
 				targetDc.fillRoundedRectangle(tensCubesArray[i][0], tensCubesArray[i][1], 15, 15, 2);
 			}
 			for (var i = 0; i < onesCubesArray.size(); i++) {
 				if (onesDigit % 2) {
-					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 				} else {
-					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_RED);
+					targetDc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
 				}
 				targetDc.fillRoundedRectangle(onesCubesArray[i][0], onesCubesArray[i][1], 15, 15, 2);
 				onesDigit = onesDigit/2;
@@ -139,3 +145,7 @@ class BinaryClockView extends WatchUi.WatchFace
     }
     
 }
+
+//
+//using Toybox.Time;
+//var now = new Time.Moment(Time.now().value()); // UNIX epoch 631148400
