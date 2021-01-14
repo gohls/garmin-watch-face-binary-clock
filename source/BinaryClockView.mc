@@ -6,6 +6,8 @@ using Toybox.Time;
 
 class BinaryClockView extends WatchUi.WatchFace 
 {
+	// Going to use this to display digital time, 
+	// for those who can't read binary time 😑	
 	var isAwake;
 
     function initialize() {
@@ -33,37 +35,10 @@ class BinaryClockView extends WatchUi.WatchFace
         targetDc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
         targetDc.fillRectangle(0, 0, dc.getWidth(), dc.getHeight()); 
         
-        var cubesDict = {
-        	"Hr" => { 
-        		"1" => [[dc.getWidth()/4, dc.getHeight()/2],
-        				[dc.getWidth()/4, dc.getHeight()/2-20]],
-        		"0" => [[dc.getWidth()/3, dc.getHeight()/2], 
-		  		  		[dc.getWidth()/3, dc.getHeight()/2-20],
-		  	      		[dc.getWidth()/3, dc.getHeight()/2-40],
-		  	      		[dc.getWidth()/3, dc.getHeight()/2-60]],
-        			},
-		  	"Min" => { 
-		  		"1" => [[dc.getWidth()/2 -20, dc.getHeight()/2],
-					  	[dc.getWidth()/2 -20, dc.getHeight()/2-20],
-					  	[dc.getWidth()/2 -20, dc.getHeight()/2-40]],
-				"0" => [[dc.getWidth()/2, dc.getHeight()/2],
-					  	[dc.getWidth()/2, dc.getHeight()/2-20],
-					  	[dc.getWidth()/2, dc.getHeight()/2-40],
-					  	[dc.getWidth()/2, dc.getHeight()/2-60]],
-					 }, 
-			"Sec" => {
-			 	"1" => [[dc.getWidth()/2 + 20, dc.getHeight()/2],
-					  	[dc.getWidth()/2 + 20, dc.getHeight()/2-20],
-					  	[dc.getWidth()/2 + 20, dc.getHeight()/2-40]],
-				"0" => [[dc.getWidth()/2 + 40, dc.getHeight()/2],
-					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-20],
-					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-40],
-					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-60]],
-					 }, 
-				};
-        
+        var cubesDict = getCubes(dc);
         var timeArray = [clockTime.hour, clockTime.min, clockTime.sec];
         
+        // Lets set the time and color those cubes   
 		for (var i = 0; i < timeArray.size(); i++) {
 			if (i == 0) {
 				colorCubes(targetDc, cubesDict.get("Hr"), timeArray[i]);
@@ -74,10 +49,9 @@ class BinaryClockView extends WatchUi.WatchFace
 			}
 		}	
 		
-		// Epoch display
+		// Epoch time 😎
 		targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);	
-        targetDc.drawText(120, 135, Graphics.FONT_GLANCE_NUMBER, Time.now().value(), Graphics.TEXT_JUSTIFY_CENTER);
-        
+        targetDc.drawText(120, 135, Graphics.FONT_XTINY, Time.now().value(), Graphics.TEXT_JUSTIFY_CENTER); 
     }
 
     // Called when this View is removed from the screen. Save the
@@ -94,16 +68,16 @@ class BinaryClockView extends WatchUi.WatchFace
     function onEnterSleep() {
     }
     
-    
     // This function is used to color in the binary time cubes.    
     function colorCubes(targetDc, cubesDict, time) {
     	var tensDigit;
     	var onesDigit;
+    	
     	// 2D array 
 		var tensCubesArray = cubesDict.get("1");
 		var onesCubesArray = cubesDict.get("0");
-		// Break up time digits by tens and ones
 	
+		// This needs to be clean up!!! 🧹
 		if (time >= 10) {
 			tensDigit = time / 10;
 			onesDigit = time % 10;
@@ -144,8 +118,35 @@ class BinaryClockView extends WatchUi.WatchFace
 		}		
     }
     
+    function getCubes(dc) {
+    	// This needs to be clean up!!! 🧹
+    	return {
+        	"Hr" => { 
+        		"1" => [[dc.getWidth()/4, dc.getHeight()/2],
+        				[dc.getWidth()/4, dc.getHeight()/2-20]],
+        		"0" => [[dc.getWidth()/3, dc.getHeight()/2], 
+		  		  		[dc.getWidth()/3, dc.getHeight()/2-20],
+		  	      		[dc.getWidth()/3, dc.getHeight()/2-40],
+		  	      		[dc.getWidth()/3, dc.getHeight()/2-60]],
+        			},
+		  	"Min" => { 
+		  		"1" => [[dc.getWidth()/2 -20, dc.getHeight()/2],
+					  	[dc.getWidth()/2 -20, dc.getHeight()/2-20],
+					  	[dc.getWidth()/2 -20, dc.getHeight()/2-40]],
+				"0" => [[dc.getWidth()/2, dc.getHeight()/2],
+					  	[dc.getWidth()/2, dc.getHeight()/2-20],
+					  	[dc.getWidth()/2, dc.getHeight()/2-40],
+					  	[dc.getWidth()/2, dc.getHeight()/2-60]],
+					 }, 
+			"Sec" => {
+			 	"1" => [[dc.getWidth()/2 + 20, dc.getHeight()/2],
+					  	[dc.getWidth()/2 + 20, dc.getHeight()/2-20],
+					  	[dc.getWidth()/2 + 20, dc.getHeight()/2-40]],
+				"0" => [[dc.getWidth()/2 + 40, dc.getHeight()/2],
+					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-20],
+					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-40],
+					  	[dc.getWidth()/2 + 40, dc.getHeight()/2-60]],
+					 }, 
+				};
+    }
 }
-
-//
-//using Toybox.Time;
-//var now = new Time.Moment(Time.now().value()); // UNIX epoch 631148400
