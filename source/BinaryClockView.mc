@@ -73,11 +73,11 @@ class BinaryClockView extends WatchUi.WatchFace
     	var tensDigit;
     	var onesDigit;
     	
-    	// 2D array 
+    	// 2D array (cube, dims)
 		var tensCubesArray = cubesDict.get("1");
 		var onesCubesArray = cubesDict.get("0");
 	
-		// This needs to be clean up!!! 🧹
+		// This needs to be cleaned up!!! 🧹
 		if (time >= 10) {
 			tensDigit = time / 10;
 			onesDigit = time % 10;
@@ -119,7 +119,7 @@ class BinaryClockView extends WatchUi.WatchFace
     }
     
     function getCubes(dc) {
-    	// This needs to be clean up!!! 🧹
+    	// This needs to be cleaned up!!! 🧹
     	return {
         	"Hr" => { 
         		"1" => [[dc.getWidth()/4, dc.getHeight()/2],
