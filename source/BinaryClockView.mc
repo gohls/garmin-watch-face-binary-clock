@@ -50,8 +50,21 @@ class BinaryClockView extends WatchUi.WatchFace
 		}	
 		
 		// Epoch time 😎
+		var time = Time.now();
 		targetDc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);	
-        targetDc.drawText(120, 135, Graphics.FONT_XTINY, Time.now().value(), Graphics.TEXT_JUSTIFY_CENTER); 
+        targetDc.drawText(120, 135, Graphics.FONT_XTINY, time.value(), Graphics.TEXT_JUSTIFY_CENTER); 
+		
+		// Date e.g. "Wed 1"       
+		var today = time.Gregorian.info(time, time.FORMAT_MEDIUM);
+		var dateString = Lang.format(
+		    "$1$ $2$",
+		    [
+		        today.day_of_week,
+		        today.day,
+		    ]
+		);
+		targetDc.drawText(147, 165, Graphics.FONT_XTINY, dateString, Graphics.TEXT_JUSTIFY_CENTER);
+        
     }
 
     // Called when this View is removed from the screen. Save the
