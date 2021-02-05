@@ -63,8 +63,11 @@ class BinaryClockView extends WatchUi.WatchFace
 		        today.day,
 		    ]
 		);
-		targetDc.drawText(175, 165, Graphics.FONT_XTINY, dateString, Graphics.TEXT_JUSTIFY_RIGHT);
-        
+		
+		// Only show when light button is pressed		
+		if (isAwake) {
+			targetDc.drawText(175, 165, Graphics.FONT_XTINY, dateString, Graphics.TEXT_JUSTIFY_RIGHT);
+		}
     }
 
     // Called when this View is removed from the screen. Save the
