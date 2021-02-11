@@ -61,6 +61,7 @@ class BinaryClockView extends WatchUi.WatchFace
 		// 24-hour time e.g. "16:51"		
 		var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%02d")]);
 		
+		// @TODO verify this
 		// Only show when light button is pressed	
 		if (isAwake) {
 			targetDc.drawText(175, 165, Graphics.FONT_XTINY, dateString, Graphics.TEXT_JUSTIFY_RIGHT);
@@ -74,12 +75,19 @@ class BinaryClockView extends WatchUi.WatchFace
     function onHide() {
     }
 
+	// This method is called when the device exits sleep mode.
     // The user has just looked at their watch. Timers and animations may be started here.
+	// Set the isAwake flag to let onUpdate know it should render the second cubes and epoch time.
     function onExitSleep() {
+		isAwake = true;
     }
 
+	// This method is called when the device re-enters sleep mode.
+    // Set the isAwake flag to let onUpdate know it should stop rendering the second cubes and epoch time.
     // Terminate any active timers and prepare for slow updates.
     function onEnterSleep() {
+		isAwake = false;
+        WatchUi.requestUpdate();
     }
     
     // This function is used to color in the binary time cubes.    
