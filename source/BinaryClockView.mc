@@ -56,17 +56,15 @@ class BinaryClockView extends WatchUi.WatchFace
 		
 		// Date e.g. "Wed 1"       
 		var today = time.Gregorian.info(time, time.FORMAT_MEDIUM);
-		var dateString = Lang.format(
-		    "$1$ $2$",
-		    [
-		        today.day_of_week,
-		        today.day,
-		    ]
-		);
+		var dateString = Lang.format("$1$ $2$",[today.day_of_week,today.day,]);
 		
-		// Only show when light button is pressed		
+		// 24-hour time e.g. "16:51"		
+		var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%02d")]);
+		
+		// Only show when light button is pressed	
 		if (isAwake) {
 			targetDc.drawText(175, 165, Graphics.FONT_XTINY, dateString, Graphics.TEXT_JUSTIFY_RIGHT);
+			targetDc.drawText(dc.getWidth()/4, dc.getHeight()/10, Graphics.FONT_XTINY, timeString, Graphics.TEXT_JUSTIFY_LEFT);
 		}
     }
 
